@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Character Chat</title>
+    <style>
+        #chat-container {
+            width: 80%;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 500px;
+            overflow-y: scroll;
+        }
+        .user-message {
+            text-align: right;
+            margin-bottom: 5px;
+        }
+        .ai-message {
+            text-align: left;
+            margin-bottom: 5px;
+            background-color: #f0f0f0;
+            padding: 5px;
+        }
+        .generated-image {
+            max-width: 300px;
+            max-height: 300px;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Character Chat</h1>
+    <div id="chat-container">
+        <!-- Chat messages will be added here -->
+    </div>
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+    <script>
+        function sendMessage() {
+            var userInput = document.getElementById('user-input').value;
+            document.getElementById('user-input').value = '';
+            var chatContainer = document.getElementById('chat-container');
+            chatContainer.innerHTML += '<div class="user-message">' + userInput + '</div>';
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'message=' + encodeURIComponent(userInput),
+            })
+            .then(response => response.json())
+            .then(data => {
+                chatContainer.innerHTML += '<div class="ai-message">' + data.response + '</div>';
+                if(data.image_path) {
+                  chatContainer.innerHTML += '<img src="' + data.image_path + '" class="generated-image">';
+                }
+
+                 chatContainer.scrollTop = chatContainer.scrollHeight;
+            });
+        }
+    </script>
+</body>
+</html>
