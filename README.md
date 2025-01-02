@@ -46,7 +46,7 @@ HUGGINGFACE_HUB_TOKEN=your_token_here
 ```
 .
 ├── main.py              # FastAPI backend application
-├── chat.html           # Simple web interface
+├── test_chat.html           # Simple web interface
 ├── requirements.txt    # Python dependencies
 └── README.md          # This file
 ```
@@ -71,29 +71,15 @@ python main.py
 ```
 The server will run on `http://localhost:8000`
 
-2. Open the web interface:
-- Simply open `chat.html` in your web browser
-- Or serve it using Python's HTTP server:
-```bash
-python -m http.server 3000
-```
-Then visit `http://localhost:3000/chat.html`
+2. Open another terminal:
+- Simply run `test_chat.py`
 
 ## Testing
 
 1. Basic conversation testing:
 ```python
-python test_ai_chat.py
+python test_chat.py
 ```
-
-2. Manual testing through the web interface:
-- Open the chat interface
-- Try image-related queries:
-  - "Can you show me what your college looks like?"
-  - "Now draw yourself standing in front of that college"
-- Test regular conversation:
-  - "Hi Rancho! How are you?"
-  - "Tell me about your college days"
 
 ## API Endpoints
 
@@ -161,7 +147,7 @@ python -c "import torch; print(torch.cuda.is_available())"
 - Verify HuggingFace token
 - Ensure sufficient disk space
 
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
