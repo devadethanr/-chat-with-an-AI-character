@@ -231,15 +231,19 @@ async def chat_endpoint(request: ChatRequest):
         user_input = request.user_input
         context = request.context
         
-        # Generate LLM response
+        # Generate LLM response with fixed parameters
         prompt = f"<s>[INST] <<SYS>>\n{CHARACTER_PERSONA}\n<</SYS>>\n\n{user_input} [/INST]"
         
+        # Fixed generation parameters
         llm_response = text_generator(
             prompt,
             max_length=500,
-            num_return_sequences=1,
+            do_sample=True,
             temperature=0.7,
-            top_p=0.9
+            top_p=0.9,
+            num_return_sequences=1,
+            pad_token_id=2,
+            truncation=True
         )[0]['generated_text']
         
         # Clean up response
