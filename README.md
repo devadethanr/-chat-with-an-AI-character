@@ -147,7 +147,4 @@ python -c "import torch; print(torch.cuda.is_available())"
 - Verify HuggingFace token
 - Ensure sufficient disk space
 
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+###submitted to Bhabha AI, please feel free to pull the repo
