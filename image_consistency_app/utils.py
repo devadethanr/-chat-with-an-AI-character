@@ -1,5 +1,7 @@
 from PIL import Image
 import logging
+import os
+from datetime import datetime
 from typing import Optional
 from models import ImageMemory
 from memory_manager import ImageMemoryManager
@@ -34,6 +36,14 @@ def generate_image_with_consistency(
             num_inference_steps=num_inference_steps,
             guidance_scale=guidance_scale
         ).images[0]
+        
+        # Save the generated image
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        image_dir = "generated_images"
+        os.makedirs(image_dir, exist_ok=True)
+        image_path = os.path.join(image_dir, f"generated_image_{timestamp}.png")
+        image.save(image_path)
+        logger.info(f"Image saved to {image_path}")
         
         return image
         

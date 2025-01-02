@@ -12,7 +12,6 @@ import os
 import torch
 from datetime import datetime
 import json
-
 from models import ChatRequest, ChatResponse, ImageMemory
 from memory_manager import ImageMemoryManager
 from utils import generate_image_with_consistency
@@ -46,29 +45,6 @@ logger.info(f"Using Hugging Face Hub token: {HUGGINGFACE_HUB_TOKEN}")
 
 if not HUGGINGFACE_HUB_TOKEN:
     raise EnvironmentError("HUGGINGFACE_HUB_TOKEN environment variable is not set")
-
-# Initialize models
-# try:
-#     # Initialize LLM
-#     text_generator = pipeline(
-#         "text-generation",
-#         model=LLM_MODEL_NAME,
-#         device_map="auto"  # Automatically choose best device
-#     )
-    
-#     # Initialize Image Generator
-#     image_generator = StableDiffusionPipeline.from_pretrained(
-#         IMAGE_MODEL_NAME,
-#         torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32,
-#         safety_checker=None  # Disable safety checker for speed
-#     )
-    
-#     if torch.cuda.is_available():
-#         image_generator = image_generator.to("cuda")
-        
-# except Exception as e:
-#     logger.error(f"Error initializing models: {str(e)}")
-#     raise
 
 # Initialize memory manager
 memory_manager = ImageMemoryManager()
@@ -140,15 +116,18 @@ async def chat_endpoint(request: ChatRequest):
                     "Content-Type": "application/json"
                 }
                 payload = {
-                    "model": "black-forest-labs/FLUX.1-schnell-Free",
+                    "model": "black-forest-labs/FLUX.1-dev",
                     "prompt": image_prompt,
-                    "steps": 20,
-                    "guidance_scale": 7.5
+                    "steps": 28,
+                    "n": 1,
+                    "width": 1024,
+                    "height": 768,
+                    "response_format": "b64_json"
                 }
                 
-                response = requests.post("https://api.together.xyz/inference", headers=headers, json=payload)
+                response = requests.post("https://api.together.xyz/v1/images/generations", headers=headers, json=payload)
                 response.raise_for_status()
-                image_data = response.json()['output']['images'][0]
+                image_data = response.json()['data'][0]['b64_json']
                 image_url = f"data:image/jpeg;base64,{image_data}"
         except:
             pass
