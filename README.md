@@ -21,7 +21,7 @@ An AI-powered chat application featuring Rancho from "3 Idiots" that generates c
 
 1. Clone the repository:
 ```bash
-git clone  ```repo url```
+git clone  ```https://github.com/devadethanr/chat-with-an-AI-character.git```
 cd [repository-name]
 ```
 
