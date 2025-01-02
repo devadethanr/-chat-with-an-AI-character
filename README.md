@@ -45,10 +45,14 @@ HUGGINGFACE_HUB_TOKEN=your_token_here
 
 ```
 .
+.
 ├── main.py              # FastAPI backend application
-├── test_chat.html           # Simple web interface
+├── models.py            # Pydantic models and dataclasses
+├── memory_manager.py    # Memory management and memory-related functions
+├── utils.py            # Utility functions and helpers
+├── test_chat.html      # Simple web interface
 ├── requirements.txt    # Python dependencies
-└── README.md          # This file
+└── README.md          # Project documentation
 ```
 
 ## Configuration
